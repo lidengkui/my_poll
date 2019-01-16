@@ -1,0 +1,44 @@
+
+logging:
+  config: classpath:log4j2-ability_test.yml
+
+#接入模块相关配置
+accessModule:
+  defaultCode: 100001   #若appId为空时，接入者视为该编号
+#jwt相关配置
+jwtConf:
+  signKey: W&&lyL$dx+sQ8*TP%vl1R}rp #签名使用的key
+  encKey: C(Me)^mGYo5uhQZ3          #需要存入敏感令牌需要加密的aeskey
+  issuer: poll                    #jwt发行者
+  tokenTypeMap:
+    user:
+      subject: user               #类别编码
+      durationMills: 25920000000  #有效期     300天
+      loginMills: 25920000000     #强制登录时间  300天
+      bindPhoneTokenMills: 300000 #  修改手机号登陆密码校验令牌有效时间  5分钟
+
+# 辅助相关配置
+assistConf:
+  pwdKeyInDb: pwd_assist  #辅助接口调用时需要传递的密码在数据库表中存储的key
+
+#文件上传配置
+uploadConf:
+  configs:
+    poll:
+      dir: D:\\file
+      allowType:
+        - csv
+        - xls
+        - xlsx
+      maxSize: 1201800
+      num: 1
+      dateDir: true
+      limit: 1000
+      batchSize: 200
+
+kaptchaConfig:
+     duration: 5   #验证码有效期期
+     maxFailTime: 3 #最大失败次数
+     failMonitorExpiry: 30 #单位分钟  与maxFailTime属性配合使用  表示30分钟内失败超过maxFailTime次锁定该用户
+     failLockExpiry: 180 #单位分钟 超过最大重试次数锁定用户时间
+     changeMaxFialTime: 2 #一天修改密码最多次数

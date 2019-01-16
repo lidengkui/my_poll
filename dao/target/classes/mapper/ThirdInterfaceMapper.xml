@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.poll.dao.mapper.ThirdInterfaceMapper" >
+
+  <resultMap id="BaseResultMap" type="com.poll.entity.ThirdInterfaceEntity" >
+    <id column="code_ti" property="codeTi" jdbcType="VARCHAR" />
+    <result column="name_ti" property="nameTi" jdbcType="VARCHAR" />
+    <result column="service_name_ti" property="serviceNameTi" jdbcType="VARCHAR" />
+    <result column="method_name_ti" property="methodNameTi" jdbcType="VARCHAR" />
+    <result column="status_ti" property="statusTi" jdbcType="TINYINT" />
+    <result column="start_time_ti" property="startTimeTi" jdbcType="TIMESTAMP" />
+    <result column="end_time_ti" property="endTimeTi" jdbcType="TIMESTAMP" />
+    <result column="create_time_ti" property="createTimeTi" jdbcType="TIMESTAMP" />
+    <result column="update_time_ti" property="updateTimeTi" jdbcType="TIMESTAMP" />
+    <result column="remark_ti" property="remarkTi" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    code_ti, name_ti, service_name_ti, method_name_ti, status_ti, start_time_ti, end_time_ti,
+    create_time_ti, update_time_ti, remark_ti
+  </sql>
+
+  <sql id="Min_Column_List" >
+    code_ti, service_name_ti, method_name_ti, status_ti, start_time_ti, end_time_ti
+  </sql>
+</mapper>

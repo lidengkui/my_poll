@@ -1,0 +1,5 @@
+
+spring:
+  profiles:
+#    active: dao_dev,mqredis_dev
+    include: @profileActive@

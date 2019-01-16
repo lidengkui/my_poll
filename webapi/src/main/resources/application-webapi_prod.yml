@@ -1,0 +1,16 @@
+# Tomcat
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8181
+  context-path: /poll/frt
+
+logging:
+  config: classpath:log4j2-webapi_prod.yml
+
+sysConf:
+  domain: 127.0.0.1:5000                          #域名
+  domainWithContext: ${sysConf.domain}${server.context-path}    #域名加工程名
+  previewPrefix: /resource  #预览路径前缀

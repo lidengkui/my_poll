@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.poll.dao.mapper.ThirdRoleMapper" >
+
+  <resultMap id="BaseResultMap" type="com.poll.entity.ThirdRoleEntity" >
+    <id column="code_tr" property="codeTr" jdbcType="VARCHAR" />
+    <result column="name_tr" property="nameTr" jdbcType="VARCHAR" />
+    <result column="auth_type_tr" property="authTypeTr" jdbcType="TINYINT" />
+    <result column="auth_str_tr" property="authStrTr" jdbcType="VARCHAR" />
+    <result column="status_tr" property="statusTr" jdbcType="TINYINT" />
+    <result column="start_time_tr" property="startTimeTr" jdbcType="TIMESTAMP" />
+    <result column="end_time_tr" property="endTimeTr" jdbcType="TIMESTAMP" />
+    <result column="create_time_tr" property="createTimeTr" jdbcType="TIMESTAMP" />
+    <result column="update_time_tr" property="updateTimeTr" jdbcType="TIMESTAMP" />
+    <result column="remark_tr" property="remarkTr" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    code_tr, name_tr, auth_type_tr, auth_str_tr, status_tr, start_time_tr, end_time_tr,
+    create_time_tr, update_time_tr, remark_tr
+  </sql>
+
+  <sql id="Min_Column_List" >
+    code_tr, auth_type_tr, auth_str_tr, status_tr, start_time_tr, end_time_tr
+  </sql>
+
+</mapper>

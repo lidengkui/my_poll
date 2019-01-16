@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.poll.dao.mapper.ProductTypeMapper" > 
+
+	<resultMap id="BaseResultMap" type="com.poll.entity.ProductTypeEntity" >
+		<id column="code_pt" property="codePt" jdbcType="VARCHAR" />
+		<result column="name_pt" property="namePt" jdbcType="VARCHAR" />
+		<result column="order_field_pt" property="orderFieldPt" jdbcType="INTEGER" />
+		<result column="status_pt" property="statusPt" jdbcType="TINYINT" />
+		<result column="remark_pt" property="remarkPt" jdbcType="VARCHAR" />
+		<result column="create_time_pt" property="createTimePt" jdbcType="TIMESTAMP" />
+		<result column="update_time_pt" property="updateTimePt" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+		code_pt, name_pt, order_field_pt, status_pt, remark_pt, create_time_pt, update_time_pt
+	</sql>
+
+	<sql id="Min_Column_List" >
+		code_pt, name_pt, status_pt
+	</sql>
+
+</mapper>

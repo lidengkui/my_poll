@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>frt</artifactId>
+        <groupId>com.poll</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>webapi</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.poll</groupId>
+            <artifactId>service</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>1.5.14.RELEASE</version>
+        </dependency>
+
+    </dependencies>
+
+    <!--这个是springboot的编译插件，如果不引入他的话，直接在父项目中执行打包命令，也会成功，但是所生成的
+    jar包里面没有依赖，只有几k大小，不知道为啥，所以我们要引入这个插件，帮助我们再次打包，原来的
+    也保留，只不过是xx.jar.original这种类型，xxxxx.jar是这个插件打包的jar。
+    然后执行java -jar filename.jar 就ok了 repackage的意思是重新打包的意思必须加 包名就是下面的 finalName -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.0.1.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <finalName>poll-webapi</finalName>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profileActive>service_dev,geteway_dev,redis_dev,dao_dev,webapi_dev</profileActive>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${basedir}/src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <includes>
+                            <!-- 此处指定需要过滤的资源文件，注意若此处用pattern方式指定多个文件，一旦文件被选为过滤，则在下面的资源排除中无法排除 -->
+                            <include>**/application.yml</include>
+                        </includes>
+                    </resource>
+                    <resource>
+                        <directory>${basedir}/src/main/resources</directory>
+                        <excludes>
+                            <exclude>**/*_prod.yml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <profileActive>service_test,geteway_test,redis_test,dao_test,webapi_test</profileActive>
+            </properties>
+
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${basedir}/src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <includes>
+                            <!-- 此处指定需要过滤的资源文件，注意若此处用pattern方式指定多个文件，一旦文件被选为过滤，则在下面的资源排除中无法排除 -->
+                            <include>**/application.yml</include>
+                        </includes>
+                    </resource>
+                    <resource>
+                        <directory>${basedir}/src/main/resources</directory>
+                        <excludes>
+                            <exclude>**/*_prod.yml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profileActive>service_prod,geteway_prod,redis_prod,dao_prod,webapi_prod</profileActive>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${basedir}/src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <includes>
+                            <!-- 此处指定需要过滤的资源文件，注意若此处用pattern方式指定多个文件，一旦文件被选为过滤，则在下面的资源排除中无法排除 -->
+                            <include>**/application.yml</include>
+                        </includes>
+                    </resource>
+                    <resource>
+                        <directory>${basedir}/src/main/resources</directory>
+                        <excludes>
+                            <exclude>**/*_dev.yml</exclude>
+                            <exclude>**/*_test.yml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

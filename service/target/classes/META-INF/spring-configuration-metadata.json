@@ -1,0 +1,86 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.poll.service.event.EventProperties",
+      "name": "acooly.event",
+      "type": "com.poll.service.event.EventProperties"
+    },
+    {
+      "sourceType": "com.poll.service.threadPool.ThreadPoolProperties",
+      "name": "acooly.threadpool",
+      "type": "com.poll.service.threadPool.ThreadPoolProperties"
+    },
+    {
+      "sourceType": "com.poll.service.conf.KaptchaConfig",
+      "name": "kaptchaConfig",
+      "type": "com.poll.service.conf.KaptchaConfig"
+    },
+    {
+      "sourceType": "com.poll.service.conf.UploadConf",
+      "name": "uploadConf",
+      "type": "com.poll.service.conf.UploadConf"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.poll.service.event.EventProperties",
+      "defaultValue": true,
+      "name": "acooly.event.enable",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.poll.service.threadPool.ThreadPoolProperties",
+      "defaultValue": 50,
+      "name": "acooly.threadpool.thread-max",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.poll.service.threadPool.ThreadPoolProperties",
+      "defaultValue": 1,
+      "name": "acooly.threadpool.thread-min",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.poll.service.threadPool.ThreadPoolProperties",
+      "defaultValue": 10,
+      "name": "acooly.threadpool.thread-queue",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.poll.service.conf.KaptchaConfig",
+      "defaultValue": 0,
+      "name": "kaptchaConfig.change-max-fial-time",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.poll.service.conf.KaptchaConfig",
+      "defaultValue": 0,
+      "name": "kaptchaConfig.duration",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.poll.service.conf.KaptchaConfig",
+      "defaultValue": 0,
+      "name": "kaptchaConfig.fail-lock-expiry",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.poll.service.conf.KaptchaConfig",
+      "defaultValue": 0,
+      "name": "kaptchaConfig.fail-monitor-expiry",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.poll.service.conf.KaptchaConfig",
+      "defaultValue": 0,
+      "name": "kaptchaConfig.max-fail-time",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.poll.service.conf.UploadConf",
+      "name": "uploadConf.configs",
+      "type": "java.util.Map<java.lang.String,com.poll.service.conf.UploadConf.Config>"
+    }
+  ]
+}

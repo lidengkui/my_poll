@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.poll.dao.mapper.ThirdAccessMapper" >
+
+  <resultMap id="BaseResultMap" type="com.poll.entity.ThirdAccessEntity" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="alias" property="alias" jdbcType="VARCHAR" />
+    <result column="role_code" property="roleCode" jdbcType="VARCHAR" />
+    <result column="partner_code" property="partnerCode" jdbcType="VARCHAR" />
+    <result column="private_key" property="privateKey" jdbcType="VARCHAR" />
+    <result column="public_key" property="publicKey" jdbcType="VARCHAR" />
+    <result column="secret_key" property="secretKey" jdbcType="VARCHAR" />
+    <result column="code_at_third" property="codeAtThird" jdbcType="VARCHAR" />
+    <result column="alias_at_third" property="aliasAtThird" jdbcType="VARCHAR" />
+    <result column="partner_code_at_third" property="partnerCodeAtThird" jdbcType="VARCHAR" />
+    <result column="private_key_at_third" property="privateKeyAtThird" jdbcType="VARCHAR" />
+    <result column="public_key_at_third" property="publicKeyAtThird" jdbcType="VARCHAR" />
+    <result column="sign_flag" property="signFlag" jdbcType="VARCHAR" />
+    <result column="enc_transformat" property="encTransformat" jdbcType="VARCHAR" />
+    <result column="ext_conf" property="extConf" jdbcType="VARCHAR" />
+    <result column="access_service_obj_code" property="accessServiceObjCode" jdbcType="VARCHAR" />
+    <result column="dev_type" property="devType" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="ExtResultMap" type="com.poll.entity.ext.ThirdAccessEntityExt" extends="BaseResultMap">
+    <!-- 一对一关联 -->
+    <association property="role" javaType="com.poll.entity.ThirdRoleEntity"
+                 resultMap="com.poll.dao.mapper.ThirdRoleMapper.BaseResultMap">
+    </association>
+
+    <!-- 一对多关联  -->
+    <collection property="roleInterfaceRltList" ofType="com.poll.entity.ext.ThirdRoleInterfaceRltEntityExt"
+        resultMap="com.poll.dao.mapper.ThirdRoleInterfaceRltMapper.ExtResultMap">
+    </collection>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    code, name, alias, role_code, partner_code, private_key, public_key, secret_key,
+    code_at_third, alias_at_third, partner_code_at_third, private_key_at_third, public_key_at_third,
+    sign_flag, enc_transformat, ext_conf, access_service_obj_code, dev_type, status,
+    create_time, update_time, remark
+  </sql>
+
+  <sql id="Min_Column_List">
+    code, alias, role_code, partner_code, private_key, public_key, secret_key,
+    code_at_third, alias_at_third, partner_code_at_third, private_key_at_third, public_key_at_third,
+    sign_flag, enc_transformat, ext_conf, access_service_obj_code, dev_type, status
+  </sql>
+
+  <select id="selectWithAuthInfo" resultMap="ExtResultMap">
+    SELECT
+      <include refid="Min_Column_List"/>,
+      <include refid="com.poll.dao.mapper.ThirdRoleMapper.Min_Column_List"/>,
+      <include refid="com.poll.dao.mapper.ThirdRoleInterfaceRltMapper.Min_Column_List"/>,
+      <include refid="com.poll.dao.mapper.ThirdInterfaceMapper.Min_Column_List"/>
+    FROM
+      third_access
+      left join third_role on code_tr = role_code
+      left join third_role_interface_rlt on role_code_trir = code_tr
+      left join third_interface on code_ti = interface_code_trir
+    WHERE
+      code = #{ code }
+  </select>
+
+</mapper>

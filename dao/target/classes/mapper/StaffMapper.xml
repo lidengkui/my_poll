@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.poll.dao.mapper.StaffMapper" > 
+
+	<resultMap id="BaseResultMap" type="com.poll.entity.StaffEntity" >
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="company_id" property="companyIdS" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="sg_id" property="sgId" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="BIGINT" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="StaffGpExtResultMap" type="com.poll.entity.ext.StaffEntityExt"
+			   extends="BaseResultMap">
+		<association property="group" javaType="com.poll.entity.StaffGpEntity"
+					 resultMap="com.poll.dao.mapper.StaffGpMapper.BaseResultMap">
+		</association>
+	</resultMap>
+
+	<resultMap id="StaffExtResultMap" type="com.poll.entity.ext.StaffEntityExt"
+			   extends="BaseResultMap">
+		<association property="group" javaType="com.poll.entity.StaffGpEntity"
+					 resultMap="com.poll.dao.mapper.StaffGpMapper.BaseResultMap">
+		</association>
+	</resultMap>
+	<sql id="Base_Column_List" >
+		id, company_id, user_id, sg_id, `name`, mobile, code, remark, create_time, update_time
+	</sql>
+
+	<sql id="Min_Column_List" >
+	</sql>
+	<select id="staffGroupList" resultMap="StaffExtResultMap">
+		SELECT
+		<include refid="Base_Column_List"/>,
+		<include refid="com.poll.dao.mapper.StaffGpMapper.Base_Column_List"/>
+		from
+		staff left join staff_gp on sg_id_s =id_sg
+		where  company_id =#{ companyIdSg } AND id in
+		<foreach collection="uIds" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+
+	</select>
+
+	<select id="findGroupByUid" resultMap="StaffGpExtResultMap">
+	SELECT
+		<include refid="Base_Column_List"/>,
+		<include refid="com.poll.dao.mapper.StaffGpMapper.Base_Column_List"/>
+	from
+		staff left join staff_gp on sg_id =id_sg
+	where id =#{ uId } AND company_id =#{ companyIdSg }
+
+	</select>
+
+
+	<update id="updateBatchGroup" parameterType="java.util.List">
+		update
+			staff
+		set
+			sg_id =#{groupId}
+		where
+			company_id = #{companyIdSg}
+			AND id in
+			<foreach collection="uIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			<if test="sgIdNe != null">
+				AND sg_id != #{sgIdNe}
+			</if>
+	</update>
+
+
+	<delete id="deletBatchGroupNum" parameterType="int">
+		delete from staff where company_id = #{companyIdSg}  and id in
+		<foreach collection="uIds" item="staffUids"  open="(" separator="," close=")">
+			#{staffUids}
+		</foreach>
+	</delete>
+
+	<select id="staffList" resultMap="StaffGpExtResultMap">
+		SELECT
+		<include refid="Base_Column_List"/>,
+		<include refid="com.poll.dao.mapper.StaffGpMapper.Base_Column_List"/>
+
+		from
+		staff left join staff_gp on sg_id =id_sg
+		where  company_id =#{ companyIdSg }
+		<if test="mobile != null">
+			and mobile = #{ mobile }
+		</if>
+		<if test="name != null">
+			and name LIKE concat('%', #{name}, '%')
+		</if>
+		<if test="groupId != null">
+			and id_sg = #{ groupId }
+		</if>
+        order by  id DESC
+		limit #{current},#{size}
+
+	</select>
+    <select id="staffListCountS" resultType="java.lang.Long">
+        SELECT
+            COUNT(id)
+        from
+        staff left join staff_gp on sg_id_s =id_sg
+        where  company_id =#{ companyIdSg }
+        <if test="mobile != null">
+            and mobile = #{ mobile }
+        </if>
+        <if test="name != null">
+            and name LIKE concat('%', #{name}, '%')
+        </if>
+        <if test="groupId != null">
+            and id_sg = #{ groupId }
+        </if>
+    </select>
+
+	<select id="selectListByCdt" resultMap="BaseResultMap">
+        SELECT
+          *
+        FROM
+          staff
+        <where>
+            <if test="companyId != null">
+              AND company_id_s = #{companyId}
+            </if>
+            <if test="sgIdList != null and sgIdList.size() > 0">
+              AND sg_id_s IN (
+                <foreach collection="sgIdList" item="sgId" separator=",">
+                    #{sgId}
+                </foreach>
+              )
+            </if>
+        </where>
+        <if test="orderClause != null and orderClause != ''">
+            order by ${orderClause}
+        </if>
+        <choose>
+            <when test="offset != null and size != null">
+                limit #{offset}, #{size}
+            </when>
+            <when test="size != null">
+                limit #{size}
+            </when>
+        </choose>
+    </select>
+</mapper>

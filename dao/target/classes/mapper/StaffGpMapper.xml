@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.poll.dao.mapper.StaffGpMapper" > 
+
+	<resultMap id="BaseResultMap" type="com.poll.entity.StaffGpEntity" >
+		<id column="id_sg" property="idSg" jdbcType="BIGINT" />
+		<result column="company_id_sg" property="companyIdSg" jdbcType="BIGINT" />
+		<result column="user_id_sg" property="userIdSg" jdbcType="BIGINT" />
+		<result column="name_sg" property="nameSg" jdbcType="VARCHAR" />
+		<result column="member_num_sg" property="memberNumSg" jdbcType="INTEGER" />
+		<result column="type_sg" property="typeSg" jdbcType="TINYINT" />
+		<result column="remark_sg" property="remarkSg" jdbcType="VARCHAR" />
+		<result column="create_time_sg" property="createTimeSg" jdbcType="TIMESTAMP" />
+		<result column="update_time_sg" property="updateTimeSg" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+		id_sg, company_id_sg, user_id_sg, name_sg, member_num_sg, type_sg, remark_sg, create_time_sg, update_time_sg
+	</sql>
+
+	<sql id="Min_Column_List" >
+	</sql>
+
+	<select id="addGpMemberNumGpMemberNum" resultType="com.poll.dao.ext.StaffGpMapperDto">
+        SET @gpMemberNum := null;
+        UPDATE
+          staff_gp
+        SET
+          member_num_sg = (SELECT @gpMemberNum := member_num_sg + #{ successNum })
+        WHERE
+            id_sg = #{ groupId } AND
+            company_id_sg = #{ companyIdSg }
+            ;
+        SELECT @gpMemberNum as gpMemberNum;
+    </select>
+
+	<select id="decreaseGpMemberNum" resultType="java.lang.Integer">
+        SET @gpMemberNum := null;
+        UPDATE
+          staff_gp
+        SET
+          member_num_sg = (SELECT @gpMemberNum := member_num_sg - #{successNum})
+        WHERE
+            id_sg = #{ groupId } AND
+            company_id_sg = #{ companyIdSg } and
+            member_num_sg >=#{successNum}
+            ;
+        SELECT @gpMemberNum as gpMemberNum;
+      </select>
+</mapper>

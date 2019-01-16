@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.poll.dao.mapper.PollPrdSnpMapper" > 
+
+	<resultMap id="BaseResultMap" type="com.poll.entity.PollPrdSnpEntity" >
+		<id column="id_pps" property="idPps" jdbcType="BIGINT" />
+		<result column="poll_id_pps" property="pollIdPps" jdbcType="BIGINT" />
+		<result column="company_id_pps" property="companyIdPps" jdbcType="BIGINT" />
+		<result column="user_id_pps" property="userIdPps" jdbcType="BIGINT" />
+		<result column="prd_code_pps" property="prdCodePps" jdbcType="VARCHAR" />
+		<result column="prd_name_pps" property="prdNamePps" jdbcType="VARCHAR" />
+		<result column="prd_name_ext_pps" property="prdNameExtPps" jdbcType="VARCHAR" />
+		<result column="prd_unit_pps" property="prdUnitPps" jdbcType="VARCHAR" />
+		<result column="poll_prd_snp" property="pollPrdSnp" jdbcType="INTEGER" />
+		<result column="purcs_num_pps" property="purcsNumPps" jdbcType="INTEGER" />
+		<result column="create_time_pps" property="createTimePps" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+		id_pps, poll_id_pps, company_id_pps, user_id_pps, prd_code_pps, prd_name_pps, prd_name_ext_pps, prd_unit_pps, 
+		poll_prd_snp, purcs_num_pps, create_time_pps
+	</sql>
+
+	<sql id="Min_Column_List" >
+	</sql>
+
+</mapper>

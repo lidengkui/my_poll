@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.poll.dao.mapper.PollSgSnpMapper" > 
+
+	<resultMap id="BaseResultMap" type="com.poll.entity.PollSgSnpEntity" >
+		<id column="id_pss" property="idPss" jdbcType="BIGINT" />
+		<result column="poll_id_pss" property="pollIdPss" jdbcType="BIGINT" />
+		<result column="company_id_pss" property="companyIdPss" jdbcType="BIGINT" />
+		<result column="user_id_pss" property="userIdPss" jdbcType="BIGINT" />
+		<result column="sg_id_pss" property="sgIdPss" jdbcType="BIGINT" />
+		<result column="sg_name_pss" property="sgNamePss" jdbcType="VARCHAR" />
+		<result column="sg_member_num_pss" property="sgMemberNumPss" jdbcType="INTEGER" />
+		<result column="create_time_pss" property="createTimePss" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+		id_pss, poll_id_pss, company_id_pss, user_id_pss, sg_id_pss, sg_name_pss, sg_member_num_pss, create_time_pss
+	</sql>
+
+	<sql id="Min_Column_List" >
+	</sql>
+
+</mapper>

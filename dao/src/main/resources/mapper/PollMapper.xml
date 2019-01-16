@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.poll.dao.mapper.PollMapper" > 
+
+	<resultMap id="BaseResultMap" type="com.poll.entity.PollEntity" >
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sg_names" property="sgNames" jdbcType="VARCHAR" />
+		<result column="sg_member_num" property="sgMemberNum" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="ExtResultMap" type="com.poll.entity.ext.PollEntityExt"
+				extends="BaseResultMap">
+		<collection property="sgList" ofType="com.poll.entity.PollSgSnpEntity"
+					resultMap="com.poll.dao.mapper.PollSgSnpMapper.BaseResultMap">
+		</collection>
+		<collection property="prdList" ofType="com.poll.entity.PollPrdSnpEntity"
+					resultMap="com.poll.dao.mapper.PollPrdSnpMapper.BaseResultMap">
+		</collection>
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+		id, company_id, user_id, code, `name`, sg_names, sg_member_num, create_time, update_time
+	</sql>
+
+	<sql id="Min_Column_List" >
+	</sql>
+
+	<select id="queryDetailById" resultMap="ExtResultMap">
+		select
+			id, code, `name`, sg_member_num,
+			id_pss, sg_name_pss, sg_member_num_pss,sg_id_pss,
+			id_pps, prd_code_pps, prd_name_pps, prd_name_ext_pps, prd_unit_pps, purcs_num_pps
+		from
+			poll
+		left join poll_sg_snp on poll_id_pss = id
+		left join poll_prd_snp on poll_id_pps = id
+		where
+			id = #{id} and company_id = #{companyId}
+		order BY
+			id_pss desc, prd_order_field_pps
+	</select>
+
+</mapper>

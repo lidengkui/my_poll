@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.poll.dao.mapper.ThirdRoleInterfaceRltMapper">
+
+  <resultMap id="BaseResultMap" type="com.poll.entity.ThirdRoleInterfaceRltEntity" >
+    <id column="id_trir" property="idTrir" jdbcType="BIGINT" />
+    <result column="role_code_trir" property="roleCodeTrir" jdbcType="VARCHAR" />
+    <result column="interface_code_trir" property="interfaceCodeTrir" jdbcType="VARCHAR" />
+    <result column="version_trir" property="versionTrir" jdbcType="VARCHAR" />
+    <result column="status_trir" property="statusTrir" jdbcType="TINYINT" />
+    <result column="start_time_trir" property="startTimeTrir" jdbcType="TIMESTAMP" />
+    <result column="end_time_trir" property="endTimeTrir" jdbcType="TIMESTAMP" />
+    <result column="create_time_trir" property="createTimeTrir" jdbcType="TIMESTAMP" />
+    <result column="update_time_trir" property="updateTimeTrir" jdbcType="TIMESTAMP" />
+    <result column="remark_trir" property="remarkTrir" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="ExtResultMap" type="com.poll.entity.ext.ThirdRoleInterfaceRltEntityExt"
+             extends="BaseResultMap">
+    <!-- 一对一关联 -->
+    <association property="thirdInterface" javaType="com.poll.entity.ThirdInterfaceEntity"
+                 resultMap="com.poll.dao.mapper.ThirdInterfaceMapper.BaseResultMap">
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id_trir, role_code_trir, interface_code_trir, version_trir, status_trir, start_time_trir,
+    end_time_trir, create_time_trir, update_time_trir, remark_trir
+  </sql>
+
+  <sql id="Min_Column_List">
+    id_trir, role_code_trir, interface_code_trir, version_trir, status_trir, start_time_trir, end_time_trir
+  </sql>
+</mapper>

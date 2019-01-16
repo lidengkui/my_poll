@@ -1,0 +1,5 @@
+
+spring:
+  profiles:
+#    active: service_dev,ability_dev,mqredis_dev,dao_dev
+    include: geteway_dev,redis_dev,dao_dev,service_dev

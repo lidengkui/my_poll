@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.poll.dao.mapper.PollSgStfPrdSnpMapper">
+
+    <resultMap id="BaseResultMap" type="com.poll.entity.PollSgStfPrdSnpEntity">
+        <id column="id_pssps" property="idPssps" jdbcType="BIGINT"/>
+        <result column="pss_id_pssps" property="pssIdPssps" jdbcType="BIGINT"/>
+        <result column="poll_id_pssps" property="pollIdPssps" jdbcType="BIGINT"/>
+        <result column="company_id_pssps" property="companyIdPssps" jdbcType="BIGINT"/>
+        <result column="user_id_pssps" property="userIdPssps" jdbcType="BIGINT"/>
+        <result column="sg_id_pssps" property="sgIdPssps" jdbcType="BIGINT"/>
+        <result column="stf_id_pssps" property="stfIdPssps" jdbcType="BIGINT"/>
+        <result column="stf_name_pssps" property="stfNamePssps" jdbcType="VARCHAR"/>
+        <result column="stf_mobile_pssps" property="stfMobilePssps" jdbcType="BIGINT"/>
+        <result column="prd_code_pssps" property="prdCodePssps" jdbcType="VARCHAR"/>
+        <result column="prd_name_pssps" property="prdNamePssps" jdbcType="VARCHAR"/>
+        <result column="prd_name_ext_pssps" property="prdNameExtPssps" jdbcType="VARCHAR"/>
+        <result column="prd_unit_pssps" property="prdUnitPssps" jdbcType="VARCHAR"/>
+        <result column="prd_order_field_pssps" property="prdOrderFieldPssps" jdbcType="INTEGER"/>
+        <result column="purcs_num_pssps" property="purcsNumPssps" jdbcType="INTEGER"/>
+        <result column="create_time_pssps" property="createTimePssps" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id_pssps
+        ,
+        pss_id_pssps,
+        poll_id_pssps,
+        company_id_pssps,
+        user_id_pssps,
+        sg_id_pssps,
+        stf_id_pssps,
+        stf_name_pssps,
+        stf_mobile_pssps,
+        prd_code_pssps,
+        prd_name_pssps,
+        prd_name_ext_pssps,
+        prd_unit_pssps,
+        prd_order_field_pssps,
+        purcs_num_pssps,
+        create_time_pssps
+    </sql>
+
+    <sql id="Min_Column_List">
+    </sql>
+
+
+    <select id="listForPagination" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select *
+        from poll_sg_stf_prd_snp pssps
+        where pssps.poll_id_pssps = #{pollId}
+        order by prd_order_field_pssps, stf_id_pssps asc limit #{offset}, #{size}
+    </select>
+
+</mapper>

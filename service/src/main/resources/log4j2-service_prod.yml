@@ -1,0 +1,65 @@
+Configuration:  
+  status: info  
+  Properties: # 定义全局变量  
+    Property: # 缺省配置（用于开发环境）。其他环境需要在VM参数中指定，如下：  
+      #测试：-Dlog.level.console=warn -Dlog.level.xjj=trace  
+      #生产：-Dlog.level.console=warn -Dlog.level.xjj=info        
+      - name: log.level.console  
+        value: info
+      - name: log.path  
+        value: /home/logs/poll
+      - name: project.name  
+        value: service
+      - name: log.pattern
+        value: "%d{yyyy-MM-dd HH:mm:ss,SSS} [%4p] - %m (%F:%L)%n"
+     
+  Appenders:  
+    Console:  #输出到控制台  
+      name: CONSOLE  
+      target: SYSTEM_OUT  
+      ThresholdFilter:  
+        level: ${sys:log.level.console} # “sys:”表示：如果VM参数中没指定这个变量值，则使用本文件中定义的缺省全局变量值  
+        onMatch: ACCEPT  
+        onMismatch: DENY  
+      PatternLayout:  
+        pattern: ${log.pattern}  
+    RollingFile: # 输出到文件，超过128MB归档  
+      - name: ROLLING_FILE_INFO  
+        ignoreExceptions: false  
+        fileName: ${log.path}/${sys:localServerIp}${project.name}.info.log
+        filePattern: "${log.path}/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}-%i.info.log.gz"  
+        PatternLayout:  
+          pattern: ${log.pattern}  
+        Policies:  
+          SizeBasedTriggeringPolicy:  
+            size: "128 MB"  
+        DefaultRolloverStrategy:  
+          max: 1000
+        ThresholdFilter: #过滤写入日志级别
+          level: info
+          onMatch: ACCEPT
+          onMismatch: DENY
+      - name: ROLLING_FILE_ERROR  
+        ignoreExceptions: false  
+        fileName: ${log.path}/${sys:localServerIp}${project.name}.error.log
+        filePattern: "${log.path}/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}-%i.error.log.gz"  
+        PatternLayout:  
+          pattern: ${log.pattern}  
+        Policies:  
+          SizeBasedTriggeringPolicy:  
+            size: "128 MB"  
+        DefaultRolloverStrategy:  
+          max: 1000
+        ThresholdFilter: #过滤写入日志级别
+          level: error
+          onMatch: ACCEPT
+          onMismatch: DENY
+  
+  Loggers:  
+    Root:  
+      level: info
+      AppenderRef:  
+        - ref: CONSOLE
+        - ref: ROLLING_FILE_INFO  
+        - ref: ROLLING_FILE_ERROR  
+
