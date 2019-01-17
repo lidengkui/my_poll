@@ -54,7 +54,7 @@ public class EventBus<T> extends MBassador<T> implements InitializingBean {
                             if (status == TransactionSynchronization.STATUS_COMMITTED) {
                                 transactionTemplate.execute(
                                         status1 -> {
-                                            EventBus.this.post(message).asynchronously();
+                                            EventBus.this.publish(message);
                                             log.info("事务环境下发部消息结束，消息Object：{}",message);
                                             return null;
                                         });
@@ -62,7 +62,7 @@ public class EventBus<T> extends MBassador<T> implements InitializingBean {
                         }
                     });
         } else {
-            EventBus.this.post(message).asynchronously();
+            EventBus.this.publish(message);
             log.info("非事务发部消息结束，消息Object：{}",message);
         }
     }
